@@ -13,3 +13,6 @@ Project to test the APIs of "practice.expandTesting".
 
 ### Steps to run tests
 In the terminal, run the command: `mvn test`
+
+### Generate report
+After running the tests, call the command `mvn allure:serve` to generate the reports. The report will open automatically.
