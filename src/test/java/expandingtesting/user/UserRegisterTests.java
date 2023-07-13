@@ -16,8 +16,9 @@ public class UserRegisterTests {
     @DisplayName("Test add new user successfully with random data.")
     void createNewRandomDataUser() {
         var user = new UserFactory().generateRandomUser();
-        ValidatableResponse response = new UsersClient().postNewRandomUser(user);
+        ValidatableResponse response = new UsersClient().postRegisterNewRandomUser(user);
         response.statusCode(SC_CREATED)
+                .body("data.id", is(not(empty())))
                 .body("data.name", is(user.getName()))
                 .body("data.email", is(user.getEmail()))
                 .body("success", is(true))
@@ -29,7 +30,7 @@ public class UserRegisterTests {
     @DisplayName("Test adding new user with invalid email.")
     void createNewUserInvalidEmail() {
         var user = new UserFactory().generateUserInvalidEmail();
-        ValidatableResponse response = new UsersClient().postNewRandomUser(user);
+        ValidatableResponse response = new UsersClient().postRegisterNewRandomUser(user);
         response.statusCode(SC_BAD_REQUEST)
                 .body("success", is(false))
                 .body("message", is(USER_REGISTER_INVALID_EMAIL.message));
@@ -39,7 +40,7 @@ public class UserRegisterTests {
     @DisplayName("Test adding new user with null name.")
     void createNewUserNullName() {
         var user = new UserFactory().generateUserNullName();
-        ValidatableResponse response = new UsersClient().postNewRandomUser(user);
+        ValidatableResponse response = new UsersClient().postRegisterNewRandomUser(user);
         response.statusCode(SC_BAD_REQUEST)
                 .body("success", is(false))
                 .body("message", is(USER_REGISTER_NULL_NAME.message));
@@ -49,7 +50,7 @@ public class UserRegisterTests {
     @DisplayName("Test adding new user with null email.")
     void createNewUserNullEmail() {
         var user = new UserFactory().generateUserNullEmail();
-        ValidatableResponse response = new UsersClient().postNewRandomUser(user);
+        ValidatableResponse response = new UsersClient().postRegisterNewRandomUser(user);
         response.statusCode(SC_BAD_REQUEST)
                 .body("success", is(false))
                 .body("message", is(USER_REGISTER_INVALID_EMAIL.message));
@@ -59,7 +60,7 @@ public class UserRegisterTests {
     @DisplayName("Test adding new user with null password.")
     void createNewUserNullPassword() {
         var user = new UserFactory().generateUserNullPassword();
-        ValidatableResponse response = new UsersClient().postNewRandomUser(user);
+        ValidatableResponse response = new UsersClient().postRegisterNewRandomUser(user);
         response.statusCode(SC_BAD_REQUEST)
                 .body("success", is(false))
                 .body("message", is(USER_REGISTER_NULL_PASSWORD.message));
