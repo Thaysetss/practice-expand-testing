@@ -12,39 +12,34 @@ public class UserFactory {
         String name = faker.name().name();
         String email = faker.internet().emailAddress();
         String password = faker.internet().password();
-
         return new UserModel(name, email, password);
     }
 
-    public UserModel generateUserInvalidEmail(){
+    public UserModel generateUserInvalidEmail() {
         String name = faker.name().name();
         String email = "test@test";
         String password = faker.internet().password();
-
         return new UserModel(name, email, password);
     }
 
-    public UserModel generateUserNullName(){
+    public UserModel generateUserNullName() {
         String name = null;
         String email = faker.internet().emailAddress();
         String password = faker.internet().password();
-
         return new UserModel(name, email, password);
     }
 
-    public UserModel generateUserNullPassword(){
+    public UserModel generateUserNullPassword() {
         String name = faker.name().name();
         String email = faker.internet().emailAddress();
         String password = null;
-
         return new UserModel(name, email, password);
     }
 
-    public UserModel generateUserNullEmail(){
+    public UserModel generateUserNullEmail() {
         String name = faker.name().name();
         String email = null;
         String password = faker.internet().password();
-
         return new UserModel(name, email, password);
     }
 }
