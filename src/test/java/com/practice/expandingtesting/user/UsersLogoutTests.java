@@ -7,37 +7,34 @@ import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.practice.expandingtesting.data.MessagesData.USER_PROFILE_SUCCESS;
+import static com.practice.expandingtesting.data.MessagesData.USER_LOGOUT_SUCCESS;
 import static com.practice.expandingtesting.data.MessagesData.USER_UNAUTHORIZED;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
 import static org.hamcrest.Matchers.is;
 
-public class UsersProfileGetTests {
+public class UsersLogoutTests {
 
     @Test
-    @DisplayName("Validate the Get method in profile endpoint when the user is valid.")
-    void getProfileValidLogin() {
+    @DisplayName("Test the logout successfully when the token is valid.")
+    void deleteLogoutUserSuccess(){
         UserModel user = new UserUtils().AuthenticationNewUser();
-        ValidatableResponse response = new UsersClient().getProfile(user.getToken());
+        ValidatableResponse response = new UsersClient().deleteLogout(user);
         response.statusCode(SC_OK)
-                .body("status", is(SC_OK))
                 .body("success", is(true))
-                .body("message", is(USER_PROFILE_SUCCESS.message))
-                .body("data.email", is(user.getEmail()))
-                .body("data.name", is(user.getName()))
-                .body("data.id", is(user.getId()));
+                .body("status", is(SC_OK))
+                .body("message", is(USER_LOGOUT_SUCCESS.message));
     }
 
     @Test
-    @DisplayName("Test the response in Get method in profile endpoint when the token is invalid.")
-    void getProfileInvalidToken() {
+    @DisplayName("Test the logout with invalid token.")
+    void deleteLogoutUserInvalidToken(){
         UserModel user = new UserUtils().AuthenticationNewUser();
-        user.setToken("123Token");
-        ValidatableResponse response = new UsersClient().getProfile(user.getToken());
+        user.setToken("123454");
+        ValidatableResponse response = new UsersClient().deleteLogout(user);
         response.statusCode(SC_UNAUTHORIZED)
-                .body("status", is(SC_UNAUTHORIZED))
                 .body("success", is(false))
+                .body("status", is(SC_UNAUTHORIZED))
                 .body("message", is(USER_UNAUTHORIZED.message));
     }
 }

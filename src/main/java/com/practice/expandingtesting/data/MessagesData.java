@@ -10,7 +10,9 @@ public enum MessagesData {
     USER_LOGIN_INCORRECT_EMAIL_PASSWORD("Incorrect email address or password"),
     USER_LOGIN_PASSWORD_LESS_CHARACTERS("Password must be between 6 and 30 characters"),
     USER_PROFILE_SUCCESS("Profile successful"),
-    USER_PROFILE_UNAUTHORIZED("Access token is not valid or has expired, you will need to login");
+    USER_UNAUTHORIZED("Access token is not valid or has expired, you will need to login"),
+
+    USER_LOGOUT_SUCCESS("User has been successfully logged out");
 
     public final String message;
 
