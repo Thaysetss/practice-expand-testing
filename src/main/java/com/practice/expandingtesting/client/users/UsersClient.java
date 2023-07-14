@@ -15,6 +15,8 @@ public class UsersClient {
     private final String urlGetProfile = ConfigurationManager.getConfiguration().basePath() + USERS_PROFILE.endpoint;
     private final String urlLogout = ConfigurationManager.getConfiguration().basePath() + USERS_DELETE_LOGOUT.endpoint;
 
+    private final String urlDeleteAccount = ConfigurationManager.getConfiguration().basePath() + USERS_DELETE_ACCOUNT.endpoint;
+
 
     private String generateBody(UserModel user) {
         return new Gson().toJson(user);
@@ -79,6 +81,16 @@ public class UsersClient {
                 .header("Content-Type", "application/json")
                 .when()
                 .delete(urlLogout)
+                .then();
+    }
+
+    public ValidatableResponse deleteAccount(UserModel user) {
+        return given()
+                .header("x-auth-token", user.getToken())
+                .header("accept", "application/json")
+                .header("Content-Type", "application/json")
+                .when()
+                .delete(urlDeleteAccount)
                 .then();
     }
 }

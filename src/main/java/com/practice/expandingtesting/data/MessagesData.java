@@ -12,7 +12,8 @@ public enum MessagesData {
     USER_PROFILE_SUCCESS("Profile successful"),
     USER_UNAUTHORIZED("Access token is not valid or has expired, you will need to login"),
 
-    USER_LOGOUT_SUCCESS("User has been successfully logged out");
+    USER_LOGOUT_SUCCESS("User has been successfully logged out"),
+    USER_DELETE_ACCOUNT_SUCCESS("Account successfully deleted");
 
     public final String message;
 

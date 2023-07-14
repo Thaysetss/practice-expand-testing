@@ -7,6 +7,7 @@ public enum EndpointsData {
     USERS_PROFILE("/users/profile"),
     USERS_FORGOT_PASSWORD("/users/forgot-password"),
     USERS_DELETE_LOGOUT("/users/logout"),
+    USERS_DELETE_ACCOUNT("/users/delete-account"),
     NOTES("/notes");
     public final String endpoint;
 
