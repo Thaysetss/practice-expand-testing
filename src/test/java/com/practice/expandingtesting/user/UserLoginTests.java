@@ -34,8 +34,8 @@ public class UserLoginTests {
         var user = new UserFactory().generateRandomUser();
         new UsersClient().postRegisterNewRandomUser(user);
         user.setPassword("wrong_password");
-        ValidatableResponse response = new UsersClient().postLogin(user);
-        response.statusCode(SC_UNAUTHORIZED)
+        new UsersClient().postLogin(user)
+                .statusCode(SC_UNAUTHORIZED)
                 .body("success", is(false))
                 .body("message", is(USER_LOGIN_INCORRECT_EMAIL_PASSWORD.message));
     }
@@ -46,8 +46,8 @@ public class UserLoginTests {
         var user = new UserFactory().generateRandomUser();
         new UsersClient().postRegisterNewRandomUser(user);
         user.setEmail("nonexistent@newemail.com");
-        ValidatableResponse response = new UsersClient().postLogin(user);
-        response.statusCode(SC_UNAUTHORIZED)
+        new UsersClient().postLogin(user)
+                .statusCode(SC_UNAUTHORIZED)
                 .body("success", is(false))
                 .body("message", is(USER_LOGIN_INCORRECT_EMAIL_PASSWORD.message));
     }
@@ -57,8 +57,8 @@ public class UserLoginTests {
     void userLoginNullEmail() {
         var user = new UserFactory().generateUserNullEmail();
         new UsersClient().postRegisterNewRandomUser(user);
-        ValidatableResponse response = new UsersClient().postLogin(user);
-        response.statusCode(SC_BAD_REQUEST)
+        new UsersClient().postLogin(user)
+                .statusCode(SC_BAD_REQUEST)
                 .body("success", is(false))
                 .body("message", is(USER_REGISTER_INVALID_EMAIL.message));
     }
@@ -69,8 +69,8 @@ public class UserLoginTests {
         var user = new UserFactory().generateRandomUser();
         new UsersClient().postRegisterNewRandomUser(user);
         user.setPassword("123pa");
-        ValidatableResponse response = new UsersClient().postLogin(user);
-        response.statusCode(SC_BAD_REQUEST)
+        new UsersClient().postLogin(user)
+                .statusCode(SC_BAD_REQUEST)
                 .body("success", is(false))
                 .body("message", is(USER_LOGIN_PASSWORD_LESS_CHARACTERS.message));
     }

@@ -55,9 +55,9 @@ public class UsersClient {
                 .getObject("data", UserModel.class);
     }
 
-    public ValidatableResponse getProfile(String token) {
+    public ValidatableResponse getProfile(UserModel user) {
         return given()
-                .header("x-auth-token", token)
+                .header("x-auth-token", user.getToken())
                 .when()
                 .get(urlGetProfile)
                 .then();

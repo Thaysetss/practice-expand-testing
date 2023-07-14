@@ -3,7 +3,6 @@ package com.practice.expandingtesting.user;
 import com.practice.expandingtesting.client.users.UsersClient;
 import com.practice.expandingtesting.model.UserModel;
 import com.practice.expandingtesting.utils.UserUtils;
-import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,10 +16,10 @@ public class UsersLogoutTests {
 
     @Test
     @DisplayName("Test the logout successfully when the token is valid.")
-    void deleteLogoutUserSuccess(){
+    void deleteLogoutUserSuccess() {
         UserModel user = new UserUtils().AuthenticationNewUser();
-        ValidatableResponse response = new UsersClient().deleteLogout(user);
-        response.statusCode(SC_OK)
+        new UsersClient().deleteLogout(user)
+                .statusCode(SC_OK)
                 .body("success", is(true))
                 .body("status", is(SC_OK))
                 .body("message", is(USER_LOGOUT_SUCCESS.message));
@@ -28,11 +27,11 @@ public class UsersLogoutTests {
 
     @Test
     @DisplayName("Test the logout with invalid token.")
-    void deleteLogoutUserInvalidToken(){
+    void deleteLogoutUserInvalidToken() {
         UserModel user = new UserUtils().AuthenticationNewUser();
         user.setToken("123454");
-        ValidatableResponse response = new UsersClient().deleteLogout(user);
-        response.statusCode(SC_UNAUTHORIZED)
+        new UsersClient().deleteLogout(user)
+                .statusCode(SC_UNAUTHORIZED)
                 .body("success", is(false))
                 .body("status", is(SC_UNAUTHORIZED))
                 .body("message", is(USER_UNAUTHORIZED.message));

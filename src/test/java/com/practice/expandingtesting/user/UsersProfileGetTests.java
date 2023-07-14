@@ -3,7 +3,6 @@ package com.practice.expandingtesting.user;
 import com.practice.expandingtesting.client.users.UsersClient;
 import com.practice.expandingtesting.model.UserModel;
 import com.practice.expandingtesting.utils.UserUtils;
-import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,8 +18,8 @@ public class UsersProfileGetTests {
     @DisplayName("Validate the Get method in profile endpoint when the user is valid.")
     void getProfileValidLogin() {
         UserModel user = new UserUtils().AuthenticationNewUser();
-        ValidatableResponse response = new UsersClient().getProfile(user.getToken());
-        response.statusCode(SC_OK)
+        new UsersClient().getProfile(user)
+                .statusCode(SC_OK)
                 .body("status", is(SC_OK))
                 .body("success", is(true))
                 .body("message", is(USER_PROFILE_SUCCESS.message))
@@ -34,8 +33,8 @@ public class UsersProfileGetTests {
     void getProfileInvalidToken() {
         UserModel user = new UserUtils().AuthenticationNewUser();
         user.setToken("123Token");
-        ValidatableResponse response = new UsersClient().getProfile(user.getToken());
-        response.statusCode(SC_UNAUTHORIZED)
+        new UsersClient().getProfile(user)
+                .statusCode(SC_UNAUTHORIZED)
                 .body("status", is(SC_UNAUTHORIZED))
                 .body("success", is(false))
                 .body("message", is(USER_UNAUTHORIZED.message));

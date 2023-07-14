@@ -3,7 +3,6 @@ package com.practice.expandingtesting.user;
 import com.practice.expandingtesting.client.users.UsersClient;
 import com.practice.expandingtesting.model.UserModel;
 import com.practice.expandingtesting.utils.UserUtils;
-import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,8 +17,8 @@ public class UserDeleteAccountTests {
     @DisplayName("Test the account was deleted successfully when the token is valid.")
     void deleteDeleteAccountSuccess() {
         UserModel user = new UserUtils().AuthenticationNewUser();
-        ValidatableResponse response = new UsersClient().deleteAccount(user);
-        response.statusCode(SC_OK)
+        new UsersClient().deleteAccount(user)
+                .statusCode(SC_OK)
                 .body("success", is(true))
                 .body("status", is(SC_OK))
                 .body("message", is(USER_DELETE_ACCOUNT_SUCCESS.message));
@@ -30,8 +29,20 @@ public class UserDeleteAccountTests {
     void deleteDeleteAccountInvalidToken() {
         UserModel user = new UserUtils().AuthenticationNewUser();
         user.setToken("123454");
-        ValidatableResponse response = new UsersClient().deleteAccount(user);
-        response.statusCode(SC_UNAUTHORIZED)
+        new UsersClient().deleteAccount(user)
+                .statusCode(SC_UNAUTHORIZED)
+                .body("success", is(false))
+                .body("status", is(SC_UNAUTHORIZED))
+                .body("message", is(USER_UNAUTHORIZED.message));
+    }
+
+    @Test
+    @DisplayName("Test if the account exists after deleting it.")
+    void validateAccountAfterDelete() {
+        UserModel user = new UserUtils().AuthenticationNewUser();
+        new UsersClient().deleteAccount(user);
+        new UsersClient().getProfile(user)
+                .statusCode(SC_UNAUTHORIZED)
                 .body("success", is(false))
                 .body("status", is(SC_UNAUTHORIZED))
                 .body("message", is(USER_UNAUTHORIZED.message));
