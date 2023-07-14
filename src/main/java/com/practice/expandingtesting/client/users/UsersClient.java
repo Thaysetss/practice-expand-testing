@@ -14,6 +14,7 @@ public class UsersClient {
     private final String urlUserLogin = ConfigurationManager.getConfiguration().basePath() + USERS_LOGIN.endpoint;
     private final String urlGetProfile = ConfigurationManager.getConfiguration().basePath() + USERS_PROFILE.endpoint;
     private final String urlLogout = ConfigurationManager.getConfiguration().basePath() + USERS_DELETE_LOGOUT.endpoint;
+    private final String urlForgot = ConfigurationManager.getConfiguration().basePath() + USERS_FORGOT_PASSWORD.endpoint;
 
     private final String urlDeleteAccount = ConfigurationManager.getConfiguration().basePath() + USERS_DELETE_ACCOUNT.endpoint;
 
@@ -71,6 +72,17 @@ public class UsersClient {
                 .body(generateBody(user))
                 .when()
                 .patch(urlGetProfile)
+                .then();
+    }
+
+    public ValidatableResponse postForgotPassword(UserModel user) {
+        return given()
+                .header("x-auth-token", user.getToken())
+                .header("accept", "application/json")
+                .header("Content-Type", "application/json")
+                .body(generateBody(user))
+                .when()
+                .post(urlForgot)
                 .then();
     }
 

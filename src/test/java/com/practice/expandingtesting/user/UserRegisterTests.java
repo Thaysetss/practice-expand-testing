@@ -22,7 +22,7 @@ public class UserRegisterTests {
                 .body("data.email", is(user.getEmail()))
                 .body("success", is(true))
                 .body("status", is(SC_CREATED))
-                .body("message", is(USER_REGISTER_ACCOUNT_CREATED.message));
+                .body("message", is(USERS_REGISTER_ACCOUNT_CREATED.message));
     }
 
     @Test
@@ -42,7 +42,7 @@ public class UserRegisterTests {
         new UsersClient().postRegisterNewRandomUser(user)
                 .statusCode(SC_BAD_REQUEST)
                 .body("success", is(false))
-                .body("message", is(USER_REGISTER_NULL_NAME.message));
+                .body("message", is(USERS_REGISTER_NULL_NAME.message));
     }
 
     @Test
@@ -62,6 +62,6 @@ public class UserRegisterTests {
         new UsersClient().postRegisterNewRandomUser(user)
                 .statusCode(SC_BAD_REQUEST)
                 .body("success", is(false))
-                .body("message", is(USER_REGISTER_NULL_PASSWORD.message));
+                .body("message", is(USERS_REGISTER_NULL_PASSWORD.message));
     }
 }

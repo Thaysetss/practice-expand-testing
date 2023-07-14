@@ -6,11 +6,11 @@ import com.practice.expandingtesting.utils.UserUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.practice.expandingtesting.data.MessagesData.USER_REGISTER_NULL_NAME;
+import static com.practice.expandingtesting.data.MessagesData.USERS_REGISTER_NULL_NAME;
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.Matchers.is;
 
-public class UserProfilePatchTests {
+public class ProfilePatchTests {
 
     @Test
     @DisplayName("Test the patch of name and password")
@@ -33,7 +33,7 @@ public class UserProfilePatchTests {
                 .statusCode(SC_BAD_REQUEST)
                 .body("success", is(false))
                 .body("status", is(SC_BAD_REQUEST))
-                .body("message", is(USER_REGISTER_NULL_NAME.message));
+                .body("message", is(USERS_REGISTER_NULL_NAME.message));
     }
 
     @Test
