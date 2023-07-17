@@ -14,7 +14,7 @@ import static org.apache.http.HttpStatus.SC_OK;
 public class UsersContractTests {
 
     @Test
-    @DisplayName("Test contract after register a new user")
+    @DisplayName("Test contract after register a new user.")
     void usersRegisterContractTest() {
         var user = new UserFactory().generateRandomUser();
         new UsersClient().postRegisterNewRandomUser(user)
@@ -23,7 +23,7 @@ public class UsersContractTests {
     }
 
     @Test
-    @DisplayName("Test contract after login a new user")
+    @DisplayName("Test contract after login a new user.")
     void usersLoginContractTest() {
         var user = new UserFactory().generateRandomUser();
         new UsersClient().postRegisterNewRandomUser(user);
@@ -34,7 +34,7 @@ public class UsersContractTests {
     }
 
     @Test
-    @DisplayName("Test the patch contract when the update was successful")
+    @DisplayName("Test the patch contract when the update was successful.")
     void patchUserContractTest() {
         UserModel user = new UserUtils().AuthenticationNewUser();
         user.setName("New Name in Patch");
@@ -45,7 +45,7 @@ public class UsersContractTests {
     }
 
     @Test
-    @DisplayName("Validate the Get method in profile endpoint when the user is valid.")
+    @DisplayName("Validate the contract of the Get method in profile endpoint.")
     void getProfileContractTest() {
         UserModel user = new UserUtils().AuthenticationNewUser();
         new UsersClient().getProfile(user)
@@ -54,7 +54,7 @@ public class UsersContractTests {
     }
 
     @Test
-    @DisplayName("Test the account was deleted successfully when the token is valid.")
+    @DisplayName("Test the contract of the delete-account method.")
     void deleteDeleteAccountSuccess() {
         UserModel user = new UserUtils().AuthenticationNewUser();
         new UsersClient().deleteAccount(user)
