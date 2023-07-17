@@ -1,8 +1,7 @@
-package com.practice.expandingtesting.user;
+package com.practice.expandingtesting.functional.users;
 
 import com.practice.expandingtesting.client.users.UsersClient;
 import com.practice.expandingtesting.factory.UserFactory;
-import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,8 +16,8 @@ public class LoginTests {
     void userLoginValidUserCreatedSuccessfully() {
         var user = new UserFactory().generateRandomUser();
         new UsersClient().postRegisterNewRandomUser(user);
-        ValidatableResponse response = new UsersClient().postLogin(user);
-        response.statusCode(SC_OK)
+        new UsersClient().postLogin(user)
+                .statusCode(SC_OK)
                 .body("success", is(true))
                 .body("status", is(SC_OK))
                 .body("message", is(USERS_LOGIN_SUCCESS.message))

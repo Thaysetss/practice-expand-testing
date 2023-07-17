@@ -1,4 +1,4 @@
-package com.practice.expandingtesting.user;
+package com.practice.expandingtesting.functional.users;
 
 import com.practice.expandingtesting.client.users.UsersClient;
 import com.practice.expandingtesting.model.UserModel;

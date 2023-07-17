@@ -86,6 +86,17 @@ public class UsersClient {
                 .then();
     }
 
+    public ValidatableResponse postChangePassword(UserModel user, String newPassword){
+        return given()
+                .header("x-auth-token", user.getToken())
+                .header("accept", "application/json")
+                .header("Content-Type", "application/json")
+                .body(generateBody(user))
+                .when()
+                .post(urlForgot)
+                .then();
+    }
+
     public ValidatableResponse deleteLogout(UserModel user) {
         return given()
                 .header("x-auth-token", user.getToken())

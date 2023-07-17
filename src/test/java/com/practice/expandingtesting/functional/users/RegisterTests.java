@@ -1,4 +1,4 @@
-package com.practice.expandingtesting.user;
+package com.practice.expandingtesting.functional.users;
 
 import com.practice.expandingtesting.client.users.UsersClient;
 import com.practice.expandingtesting.factory.UserFactory;
@@ -10,7 +10,7 @@ import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
 import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.hamcrest.Matchers.*;
 
-public class UserRegisterTests {
+public class RegisterTests {
     @Test
     @DisplayName("Test add new user successfully with random data.")
     void createNewRandomDataUser() {
