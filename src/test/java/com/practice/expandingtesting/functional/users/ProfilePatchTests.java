@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.practice.expandingtesting.data.MessagesData.USERS_REGISTER_NULL_NAME;
+import static com.practice.expandingtesting.data.UsersMessages.REGISTER_NULL_NAME;
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.Matchers.is;
 
@@ -45,7 +45,7 @@ public class ProfilePatchTests {
                 .statusCode(SC_BAD_REQUEST)
                 .body("success", is(false))
                 .body("status", is(SC_BAD_REQUEST))
-                .body("message", is(USERS_REGISTER_NULL_NAME.message));
+                .body("message", is(REGISTER_NULL_NAME.message));
     }
 
     @Test

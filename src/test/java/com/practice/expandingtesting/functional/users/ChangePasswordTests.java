@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.practice.expandingtesting.data.MessagesData.*;
+import static com.practice.expandingtesting.data.UsersMessages.*;
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.CoreMatchers.is;
 
@@ -35,7 +35,7 @@ public class ChangePasswordTests {
                 .statusCode(SC_OK)
                 .body("success", is(true))
                 .body("status", is(SC_OK))
-                .body("message", is(USERS_CHANGE_PASSWORD_SUCCESS.message));
+                .body("message", is(CHANGE_PASSWORD_SUCCESS.message));
     }
 
     @Test
@@ -47,7 +47,7 @@ public class ChangePasswordTests {
                 .statusCode(SC_UNAUTHORIZED)
                 .body("success", is(false))
                 .body("status", is(SC_UNAUTHORIZED))
-                .body("message", is(USERS_UNAUTHORIZED.message));
+                .body("message", is(UNAUTHORIZED.message));
     }
     @Test
     @DisplayName("Test que Change Password endpoint using an invalid password as new password.")
@@ -57,6 +57,6 @@ public class ChangePasswordTests {
                 .statusCode(SC_BAD_REQUEST)
                 .body("success", is(false))
                 .body("status", is(SC_BAD_REQUEST))
-                .body("message", is(USERS_NEW_PASSWORD_CHARACTERS.message));
+                .body("message", is(NEW_PASSWORD_CHARACTERS.message));
     }
 }

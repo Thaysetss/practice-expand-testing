@@ -5,7 +5,7 @@ import com.practice.expandingtesting.factory.UserFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.practice.expandingtesting.data.MessagesData.*;
+import static com.practice.expandingtesting.data.UsersMessages.*;
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.Matchers.*;
 
@@ -20,7 +20,7 @@ public class LoginTests {
                 .statusCode(SC_OK)
                 .body("success", is(true))
                 .body("status", is(SC_OK))
-                .body("message", is(USERS_LOGIN_SUCCESS.message))
+                .body("message", is(LOGIN_SUCCESS.message))
                 .body("data.id", is(not(empty())))
                 .body("data.name", is(user.getName()))
                 .body("data.email", is(user.getEmail()))
@@ -36,7 +36,7 @@ public class LoginTests {
         new UsersClient().postLogin(user)
                 .statusCode(SC_UNAUTHORIZED)
                 .body("success", is(false))
-                .body("message", is(USERS_LOGIN_INCORRECT_EMAIL_PASSWORD.message));
+                .body("message", is(LOGIN_INCORRECT_EMAIL_PASSWORD.message));
     }
 
     @Test
@@ -48,7 +48,7 @@ public class LoginTests {
         new UsersClient().postLogin(user)
                 .statusCode(SC_UNAUTHORIZED)
                 .body("success", is(false))
-                .body("message", is(USERS_LOGIN_INCORRECT_EMAIL_PASSWORD.message));
+                .body("message", is(LOGIN_INCORRECT_EMAIL_PASSWORD.message));
     }
 
     @Test
@@ -59,7 +59,7 @@ public class LoginTests {
         new UsersClient().postLogin(user)
                 .statusCode(SC_BAD_REQUEST)
                 .body("success", is(false))
-                .body("message", is(USER_REGISTER_INVALID_EMAIL.message));
+                .body("message", is(REGISTER_INVALID_EMAIL.message));
     }
 
     @Test
@@ -71,6 +71,6 @@ public class LoginTests {
         new UsersClient().postLogin(user)
                 .statusCode(SC_BAD_REQUEST)
                 .body("success", is(false))
-                .body("message", is(USERS_LOGIN_PASSWORD_LESS_CHARACTERS.message));
+                .body("message", is(LOGIN_PASSWORD_LESS_CHARACTERS.message));
     }
 }

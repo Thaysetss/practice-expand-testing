@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.practice.expandingtesting.data.MessagesData.*;
+import static com.practice.expandingtesting.data.UsersMessages.*;
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.Matchers.is;
 
@@ -44,7 +44,7 @@ public class ForgotPasswordTests {
                 .statusCode(SC_BAD_REQUEST)
                 .body("success", is(false))
                 .body("status", is(SC_BAD_REQUEST))
-                .body("message", is(USERS_FORGOT_PASSWORD_INVALID_EMAIL.message));
+                .body("message", is(FORGOT_PASSWORD_INVALID_EMAIL.message));
     }
 
     @Test
@@ -55,6 +55,6 @@ public class ForgotPasswordTests {
                 .statusCode(SC_UNAUTHORIZED)
                 .body("success", is(false))
                 .body("status", is(SC_UNAUTHORIZED))
-                .body("message", is(USERS_FORGOT_PASSWORD_NONEXISTENT_EMAIL.message));
+                .body("message", is(FORGOT_PASSWORD_NONEXISTENT_EMAIL.message));
     }
 }

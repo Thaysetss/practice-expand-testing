@@ -5,7 +5,7 @@ import com.practice.expandingtesting.factory.UserFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.practice.expandingtesting.data.MessagesData.*;
+import static com.practice.expandingtesting.data.UsersMessages.*;
 import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
 import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.hamcrest.Matchers.*;
@@ -22,7 +22,7 @@ public class RegisterTests {
                 .body("data.email", is(user.getEmail()))
                 .body("success", is(true))
                 .body("status", is(SC_CREATED))
-                .body("message", is(USERS_REGISTER_ACCOUNT_CREATED.message));
+                .body("message", is(REGISTER_ACCOUNT_CREATED.message));
     }
 
     @Test
@@ -32,7 +32,7 @@ public class RegisterTests {
         new UsersClient().postRegisterNewUser(user)
                 .statusCode(SC_BAD_REQUEST)
                 .body("success", is(false))
-                .body("message", is(USER_REGISTER_INVALID_EMAIL.message));
+                .body("message", is(REGISTER_INVALID_EMAIL.message));
     }
 
     @Test
@@ -42,7 +42,7 @@ public class RegisterTests {
         new UsersClient().postRegisterNewUser(user)
                 .statusCode(SC_BAD_REQUEST)
                 .body("success", is(false))
-                .body("message", is(USERS_REGISTER_NULL_NAME.message));
+                .body("message", is(REGISTER_NULL_NAME.message));
     }
 
     @Test
@@ -52,7 +52,7 @@ public class RegisterTests {
         new UsersClient().postRegisterNewUser(user)
                 .statusCode(SC_BAD_REQUEST)
                 .body("success", is(false))
-                .body("message", is(USER_REGISTER_INVALID_EMAIL.message));
+                .body("message", is(REGISTER_INVALID_EMAIL.message));
     }
 
     @Test
@@ -62,6 +62,6 @@ public class RegisterTests {
         new UsersClient().postRegisterNewUser(user)
                 .statusCode(SC_BAD_REQUEST)
                 .body("success", is(false))
-                .body("message", is(USERS_REGISTER_NULL_PASSWORD.message));
+                .body("message", is(REGISTER_NULL_PASSWORD.message));
     }
 }

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.practice.expandingtesting.data.MessagesData.*;
+import static com.practice.expandingtesting.data.UsersMessages.*;
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.CoreMatchers.is;
 
@@ -37,7 +37,7 @@ public class VerifyResetTokenTests {
                 .statusCode(SC_OK)
                 .body("success", is(true))
                 .body("status", is(SC_OK))
-                .body("message", is(USERS_VERIFY_TOKEN_SUCCESS.message));
+                .body("message", is(VERIFY_TOKEN_SUCCESS.message));
     }
 
     @Test
@@ -50,7 +50,7 @@ public class VerifyResetTokenTests {
                 .statusCode(SC_UNAUTHORIZED)
                 .body("success", is(false))
                 .body("status", is(SC_UNAUTHORIZED))
-                .body("message", is(USERS_VERIFY_TOKEN_INVALID.message));
+                .body("message", is(VERIFY_TOKEN_INVALID.message));
     }
 
     @Test
@@ -64,6 +64,6 @@ public class VerifyResetTokenTests {
                 .statusCode(SC_UNAUTHORIZED)
                 .body("success", is(false))
                 .body("status", is(SC_UNAUTHORIZED))
-                .body("message", is(USERS_VERIFY_TOKEN_INVALID.message));
+                .body("message", is(VERIFY_TOKEN_INVALID.message));
     }
 }
