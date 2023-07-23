@@ -13,13 +13,15 @@ import static io.restassured.RestAssured.given;
 
 public class UsersClient {
 
-    private final String urlUserRegister = ConfigurationManager.getConfiguration().basePath() + USERS_REGISTER.endpoint;
-    private final String urlUserLogin = ConfigurationManager.getConfiguration().basePath() + USERS_LOGIN.endpoint;
-    private final String urlGetProfile = ConfigurationManager.getConfiguration().basePath() + USERS_PROFILE.endpoint;
-    private final String urlLogout = ConfigurationManager.getConfiguration().basePath() + USERS_DELETE_LOGOUT.endpoint;
-    private final String urlForgot = ConfigurationManager.getConfiguration().basePath() + USERS_FORGOT_PASSWORD.endpoint;
-    private final String urlReset = ConfigurationManager.getConfiguration().basePath() + USERS_RESET_PASSWORD.endpoint;
-    private final String urlDeleteAccount = ConfigurationManager.getConfiguration().basePath() + USERS_DELETE_ACCOUNT.endpoint;
+    private final String basePath = ConfigurationManager.getConfiguration().basePath();
+    private final String urlUserRegister = basePath + USERS_REGISTER.endpoint;
+    private final String urlUserLogin = basePath + USERS_LOGIN.endpoint;
+    private final String urlGetProfile = basePath + USERS_PROFILE.endpoint;
+    private final String urlLogout = basePath + USERS_DELETE_LOGOUT.endpoint;
+    private final String urlForgot = basePath + USERS_FORGOT_PASSWORD.endpoint;
+    private final String urlReset = basePath + USERS_RESET_PASSWORD.endpoint;
+    private final String urlDeleteAccount = basePath + USERS_DELETE_ACCOUNT.endpoint;
+    private final String urlChangePassword = basePath + USERS_CHANGE_PASSWORD.endpoint;
 
 
     private String generateBody(UserModel user) {
@@ -60,8 +62,8 @@ public class UsersClient {
     }
 
     public ValidatableResponse getProfile(UserModel user) {
-        return given()
-                .header("x-auth-token", user.getToken())
+        return given().
+                header("x-auth-token", user.getToken())
                 .when()
                 .get(urlGetProfile)
                 .then();
@@ -93,19 +95,22 @@ public class UsersClient {
         return given()
                 .header("x-auth-token", user.getToken())
                 .header("accept", "application/json")
-                .header("Content-Type", "application/json")
-                .body(generateBody(user))
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                .contentType("application/x-www-form-urlencoded; charset=utf-8")
+                .formParam("currentPassword", user.getPassword())
+                .formParam("newPassword", newPassword)
                 .when()
-                .post(urlForgot)
+                .post(urlChangePassword)
                 .then();
     }
 
     public ValidatableResponse postResetPassword(String token, String newPassword) {
         return given()
-                .config(RestAssured.config().encoderConfig(EncoderConfig.encoderConfig().encodeContentTypeAs("x-www-form-urlencoded", ContentType.URLENC)))
+                .config(RestAssured.config()
+                        .encoderConfig(EncoderConfig.encoderConfig()
+                        .encodeContentTypeAs("x-www-form-urlencoded", ContentType.URLENC)))
                 .header("accept", "application/json")
                 .header("Content-Type", "application/x-www-form-urlencoded")
-                .header("Cookie", "express:sess=eyJmbGFzaCI6e319; express:sess.sig=tdt42nQZiQvICqmrvHQ1_16fHk0")
                 .contentType("application/x-www-form-urlencoded; charset=utf-8")
                 .formParam("token", token)
                 .formParam("newPassword", newPassword)

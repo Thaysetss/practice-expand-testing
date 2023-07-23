@@ -7,8 +7,10 @@ import com.practice.expandingtesting.model.UserModel;
 public class UserUtils {
     public UserModel authenticationNewUser(){
         UserModel user = new UserFactory().generateRandomUser();
+        String password = user.getPassword();
         new UsersClient().postRegisterNewUser(user);
         user = new UsersClient().postLoginReturnUser(user);
+        user.setPassword(password);
         return user;
     }
 

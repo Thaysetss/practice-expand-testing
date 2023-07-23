@@ -1,7 +1,6 @@
 package com.practice.expandingtesting.data;
 
 public enum MessagesData {
-
     USERS_REGISTER_ACCOUNT_CREATED("User account created successfully"),
     USER_REGISTER_INVALID_EMAIL("A valid email address is required"),
     USERS_REGISTER_NULL_NAME("User name must be between 4 and 30 characters"),
@@ -16,8 +15,9 @@ public enum MessagesData {
     USERS_FORGOT_PASSWORD_SUCCESS("Password reset link successfully sent to {S}. Please verify by clicking on the given link"),
     USERS_FORGOT_PASSWORD_INVALID_EMAIL("A valid email address is required"),
     USERS_FORGOT_PASSWORD_NONEXISTENT_EMAIL("No account found with the given email address"),
-    USERS_RESET_PASSWORD_SUCCESS("The password was successfully updated");
-
+    USERS_RESET_PASSWORD_SUCCESS("The password was successfully updated"),
+    USERS_CHANGE_PASSWORD_SUCCESS("The password was successfully updated"),
+    USERS_NEW_PASSWORD_CHARACTERS("New password must be between 6 and 30 characters");
     public final String message;
 
     MessagesData(String message) {
