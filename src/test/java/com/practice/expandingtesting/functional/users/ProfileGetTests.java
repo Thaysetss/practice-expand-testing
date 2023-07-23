@@ -17,7 +17,7 @@ public class ProfileGetTests {
     @Test
     @DisplayName("Validate the Get method in profile endpoint when the user is valid.")
     void getProfileValidLogin() {
-        UserModel user = new UserUtils().AuthenticationNewUser();
+        UserModel user = new UserUtils().authenticationNewUser();
         new UsersClient().getProfile(user)
                 .statusCode(SC_OK)
                 .body("status", is(SC_OK))
@@ -31,7 +31,7 @@ public class ProfileGetTests {
     @Test
     @DisplayName("Test the response in Get method in profile endpoint when the token is invalid.")
     void getProfileInvalidToken() {
-        UserModel user = new UserUtils().AuthenticationNewUser();
+        UserModel user = new UserUtils().authenticationNewUser();
         user.setToken("123Token");
         new UsersClient().getProfile(user)
                 .statusCode(SC_UNAUTHORIZED)

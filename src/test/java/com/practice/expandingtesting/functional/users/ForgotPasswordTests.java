@@ -14,8 +14,8 @@ public class ForgotPasswordTests {
 
     @Test
     @DisplayName("Test que request for forgot password with valid email.")
-    void forgotPasswordSucces() {
-        UserModel user = new UserUtils().AuthenticationNewUser();
+    void forgotPasswordSuccess() {
+        UserModel user = new UserUtils().authenticationNewUser();
         new UsersClient().postForgotPassword(user)
                 .statusCode(SC_OK)
                 .body("success", is(true))
@@ -27,7 +27,7 @@ public class ForgotPasswordTests {
     @Test
     @DisplayName("Test the request with an invalid email.")
     void forgotPasswordInvalidEmail() {
-        UserModel user = new UserUtils().AuthenticationNewUser();
+        UserModel user = new UserUtils().authenticationNewUser();
         user.setEmail("testemail");
         new UsersClient().postForgotPassword(user)
                 .statusCode(SC_BAD_REQUEST)
@@ -39,7 +39,7 @@ public class ForgotPasswordTests {
     @Test
     @DisplayName("Test the request with a nonexistent email.")
     void forgotPasswordNonexistentEmail() {
-        UserModel user = new UserUtils().AuthenticationNewUser();
+        UserModel user = new UserUtils().authenticationNewUser();
         user.setEmail("this_test_non_existent_email@nonexistent.com");
         new UsersClient().postForgotPassword(user)
                 .statusCode(SC_UNAUTHORIZED)

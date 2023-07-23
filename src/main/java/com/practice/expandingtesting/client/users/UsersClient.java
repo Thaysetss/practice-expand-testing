@@ -3,6 +3,9 @@ package com.practice.expandingtesting.client.users;
 import com.google.gson.Gson;
 import com.practice.expandingtesting.config.ConfigurationManager;
 import com.practice.expandingtesting.model.UserModel;
+import io.restassured.RestAssured;
+import io.restassured.config.EncoderConfig;
+import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 
 import static com.practice.expandingtesting.data.EndpointsData.*;
@@ -15,7 +18,7 @@ public class UsersClient {
     private final String urlGetProfile = ConfigurationManager.getConfiguration().basePath() + USERS_PROFILE.endpoint;
     private final String urlLogout = ConfigurationManager.getConfiguration().basePath() + USERS_DELETE_LOGOUT.endpoint;
     private final String urlForgot = ConfigurationManager.getConfiguration().basePath() + USERS_FORGOT_PASSWORD.endpoint;
-
+    private final String urlReset = ConfigurationManager.getConfiguration().basePath() + USERS_RESET_PASSWORD.endpoint;
     private final String urlDeleteAccount = ConfigurationManager.getConfiguration().basePath() + USERS_DELETE_ACCOUNT.endpoint;
 
 
@@ -23,7 +26,7 @@ public class UsersClient {
         return new Gson().toJson(user);
     }
 
-    public ValidatableResponse postRegisterNewRandomUser(UserModel user) {
+    public ValidatableResponse postRegisterNewUser(UserModel user) {
         return given()
                 .header("accept", "application/json")
                 .header("Content-Type", "application/json")
@@ -86,7 +89,7 @@ public class UsersClient {
                 .then();
     }
 
-    public ValidatableResponse postChangePassword(UserModel user, String newPassword){
+    public ValidatableResponse postChangePassword(UserModel user, String newPassword) {
         return given()
                 .header("x-auth-token", user.getToken())
                 .header("accept", "application/json")
@@ -94,6 +97,20 @@ public class UsersClient {
                 .body(generateBody(user))
                 .when()
                 .post(urlForgot)
+                .then();
+    }
+
+    public ValidatableResponse postResetPassword(String token, String newPassword) {
+        return given()
+                .config(RestAssured.config().encoderConfig(EncoderConfig.encoderConfig().encodeContentTypeAs("x-www-form-urlencoded", ContentType.URLENC)))
+                .header("accept", "application/json")
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                .header("Cookie", "express:sess=eyJmbGFzaCI6e319; express:sess.sig=tdt42nQZiQvICqmrvHQ1_16fHk0")
+                .contentType("application/x-www-form-urlencoded; charset=utf-8")
+                .formParam("token", token)
+                .formParam("newPassword", newPassword)
+                .when()
+                .post(urlReset)
                 .then();
     }
 

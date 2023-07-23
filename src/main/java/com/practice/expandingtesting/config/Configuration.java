@@ -11,4 +11,11 @@ public interface Configuration extends Config {
 
     @Key("base.uri")
     String basePath();
+
+    @Key("mailsac.uri")
+    String mailsacPath();
+
+    @Key("mailsac.apikey")
+    String mailsacKey();
+
 }

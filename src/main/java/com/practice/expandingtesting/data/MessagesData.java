@@ -15,7 +15,8 @@ public enum MessagesData {
     USERS_DELETE_ACCOUNT_SUCCESS("Account successfully deleted"),
     USERS_FORGOT_PASSWORD_SUCCESS("Password reset link successfully sent to {S}. Please verify by clicking on the given link"),
     USERS_FORGOT_PASSWORD_INVALID_EMAIL("A valid email address is required"),
-    USERS_FORGOT_PASSWORD_NONEXISTENT_EMAIL("No account found with the given email address");
+    USERS_FORGOT_PASSWORD_NONEXISTENT_EMAIL("No account found with the given email address"),
+    USERS_RESET_PASSWORD_SUCCESS("The password was successfully updated");
 
     public final String message;
 

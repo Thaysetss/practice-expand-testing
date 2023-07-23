@@ -15,6 +15,12 @@ public class UserFactory {
         return new UserModel(name, email, password);
     }
 
+    public UserModel generateUserWithEmail(String email) {
+        String name = faker.name().name();
+        String password = faker.internet().password();
+        return new UserModel(name, email, password);
+    }
+
     public UserModel generateUserInvalidEmail() {
         String name = faker.name().name();
         String email = "test@test";

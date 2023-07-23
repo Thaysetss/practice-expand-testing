@@ -17,7 +17,7 @@ public class LogoutTests {
     @Test
     @DisplayName("Test the logout successfully when the token is valid.")
     void deleteLogoutUserSuccess() {
-        UserModel user = new UserUtils().AuthenticationNewUser();
+        UserModel user = new UserUtils().authenticationNewUser();
         new UsersClient().deleteLogout(user)
                 .statusCode(SC_OK)
                 .body("success", is(true))
@@ -28,7 +28,7 @@ public class LogoutTests {
     @Test
     @DisplayName("Test the logout with invalid token.")
     void deleteLogoutUserInvalidToken() {
-        UserModel user = new UserUtils().AuthenticationNewUser();
+        UserModel user = new UserUtils().authenticationNewUser();
         user.setToken("123454");
         new UsersClient().deleteLogout(user)
                 .statusCode(SC_UNAUTHORIZED)

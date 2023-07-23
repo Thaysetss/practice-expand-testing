@@ -15,7 +15,7 @@ public class ProfilePatchTests {
     @Test
     @DisplayName("Test the patch of name and password")
     void patchAllUserData() {
-        UserModel user = new UserUtils().AuthenticationNewUser();
+        UserModel user = new UserUtils().authenticationNewUser();
         user.setName("New Name in Patch");
         user.setPassword("PatchTest123");
         new UsersClient().patchProfile(user)
@@ -26,7 +26,7 @@ public class ProfilePatchTests {
     @Test
     @DisplayName("Test the patch with name with less than the minimum characters.")
     void patchInvalidName() {
-        UserModel user = new UserUtils().AuthenticationNewUser();
+        UserModel user = new UserUtils().authenticationNewUser();
         user.setName("New");
         user.setPassword("PatchTest123");
         new UsersClient().patchProfile(user)
@@ -39,11 +39,11 @@ public class ProfilePatchTests {
     @Test
     @DisplayName("Test the patch with invalid token")
     void patchInvalidToken() {
-        UserModel user = new UserUtils().AuthenticationNewUser();
+        UserModel user = new UserUtils().authenticationNewUser();
         user.setToken("15156");
         new UsersClient().patchProfile(user)
                 .statusCode(SC_UNAUTHORIZED)
                 .body("success", is(false))
-                .body("status", is(SC_BAD_REQUEST));
+                .body("status", is(SC_UNAUTHORIZED));
     }
 }

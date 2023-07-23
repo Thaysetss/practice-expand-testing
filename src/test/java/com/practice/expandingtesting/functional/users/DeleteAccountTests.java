@@ -16,7 +16,7 @@ public class DeleteAccountTests {
     @Test
     @DisplayName("Test the account was deleted successfully when the token is valid.")
     void deleteDeleteAccountSuccess() {
-        UserModel user = new UserUtils().AuthenticationNewUser();
+        UserModel user = new UserUtils().authenticationNewUser();
         new UsersClient().deleteAccount(user)
                 .statusCode(SC_OK)
                 .body("success", is(true))
@@ -27,7 +27,7 @@ public class DeleteAccountTests {
     @Test
     @DisplayName("Test if the account was deleted when the request has an invalid token.")
     void deleteDeleteAccountInvalidToken() {
-        UserModel user = new UserUtils().AuthenticationNewUser();
+        UserModel user = new UserUtils().authenticationNewUser();
         user.setToken("123454");
         new UsersClient().deleteAccount(user)
                 .statusCode(SC_UNAUTHORIZED)
@@ -39,7 +39,7 @@ public class DeleteAccountTests {
     @Test
     @DisplayName("Test if the account exists after deleting it.")
     void validateAccountAfterDelete() {
-        UserModel user = new UserUtils().AuthenticationNewUser();
+        UserModel user = new UserUtils().authenticationNewUser();
         new UsersClient().deleteAccount(user);
         new UsersClient().getProfile(user)
                 .statusCode(SC_UNAUTHORIZED)

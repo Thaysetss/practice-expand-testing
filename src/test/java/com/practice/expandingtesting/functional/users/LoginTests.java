@@ -15,7 +15,7 @@ public class LoginTests {
     @DisplayName("Test login with valid data from user created successfully.")
     void userLoginValidUserCreatedSuccessfully() {
         var user = new UserFactory().generateRandomUser();
-        new UsersClient().postRegisterNewRandomUser(user);
+        new UsersClient().postRegisterNewUser(user);
         new UsersClient().postLogin(user)
                 .statusCode(SC_OK)
                 .body("success", is(true))
@@ -31,7 +31,7 @@ public class LoginTests {
     @DisplayName("Test login with an invalid password, resulting in error 401.")
     void userLoginInvalidPassword() {
         var user = new UserFactory().generateRandomUser();
-        new UsersClient().postRegisterNewRandomUser(user);
+        new UsersClient().postRegisterNewUser(user);
         user.setPassword("wrong_password");
         new UsersClient().postLogin(user)
                 .statusCode(SC_UNAUTHORIZED)
@@ -43,7 +43,7 @@ public class LoginTests {
     @DisplayName("Test login with an email that was not created, resulting in error 401.")
     void userLoginNonexistentEmail() {
         var user = new UserFactory().generateRandomUser();
-        new UsersClient().postRegisterNewRandomUser(user);
+        new UsersClient().postRegisterNewUser(user);
         user.setEmail("nonexistent@newemail.com");
         new UsersClient().postLogin(user)
                 .statusCode(SC_UNAUTHORIZED)
@@ -55,7 +55,7 @@ public class LoginTests {
     @DisplayName("Test login with null email and result status code 400.")
     void userLoginNullEmail() {
         var user = new UserFactory().generateUserNullEmail();
-        new UsersClient().postRegisterNewRandomUser(user);
+        new UsersClient().postRegisterNewUser(user);
         new UsersClient().postLogin(user)
                 .statusCode(SC_BAD_REQUEST)
                 .body("success", is(false))
@@ -66,7 +66,7 @@ public class LoginTests {
     @DisplayName("Test login with a password with less than six characters, resulting in error 400.")
     void userLoginLessPasswordCharacters() {
         var user = new UserFactory().generateRandomUser();
-        new UsersClient().postRegisterNewRandomUser(user);
+        new UsersClient().postRegisterNewUser(user);
         user.setPassword("123pa");
         new UsersClient().postLogin(user)
                 .statusCode(SC_BAD_REQUEST)
