@@ -1,9 +1,11 @@
 package com.practice.expandingtesting.contract.user;
 
 import com.practice.expandingtesting.client.users.UsersClient;
+import com.practice.expandingtesting.factory.EmailFactory;
 import com.practice.expandingtesting.factory.UserFactory;
 import com.practice.expandingtesting.model.UserModel;
 import com.practice.expandingtesting.utils.UserUtils;
+import net.datafaker.Faker;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +14,8 @@ import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.apache.http.HttpStatus.SC_OK;
 
 public class UsersContractTests {
+
+    private final static String email = "test17@mailsac.com";
 
     @Test
     @DisplayName("Test contract after register a new user.")
@@ -30,7 +34,6 @@ public class UsersContractTests {
         new UsersClient().postLogin(user)
                 .statusCode(SC_OK)
                 .body(matchesJsonSchemaInClasspath("jsonschemas/UserLoginSchema.json"));
-
     }
 
     @Test
@@ -42,6 +45,7 @@ public class UsersContractTests {
         new UsersClient().patchProfile(user)
                 .statusCode(SC_OK)
                 .body(matchesJsonSchemaInClasspath("jsonschemas/UserRegisterSchema.json"));
+        new UsersClient().deleteAccount(user);
     }
 
     @Test
@@ -51,6 +55,7 @@ public class UsersContractTests {
         new UsersClient().getProfile(user)
                 .statusCode(SC_OK)
                 .body(matchesJsonSchemaInClasspath("jsonschemas/UserRegisterSchema.json"));
+        new UsersClient().deleteAccount(user);
     }
 
     @Test
@@ -59,7 +64,44 @@ public class UsersContractTests {
         UserModel user = new UserUtils().authenticationNewUser();
         new UsersClient().postForgotPassword(user)
                 .statusCode(SC_OK)
-                .body(matchesJsonSchemaInClasspath("jsonschemas/ChangePasswordSchema.json"));
+                .body(matchesJsonSchemaInClasspath("jsonschemas/BasicResponseWithMessageSchema.json"));
+        new UsersClient().deleteAccount(user);
+    }
+
+    @Test
+    @DisplayName("Test contract for Verify Reset Password Token endpoint")
+    void verifyTokenContractTest() throws InterruptedException {
+        UserModel user = new UserUtils().authenticationNewUserWithEmail(email);
+        new UsersClient().postForgotPassword(user);
+        String token = new EmailFactory().returnTokenFromEmail(email);
+        new UsersClient().postVerifyResetPasswordToken(token)
+                .statusCode(SC_OK)
+                .body(matchesJsonSchemaInClasspath("jsonschemas/BasicResponseWithMessageSchema.json"));
+        new UsersClient().deleteAccount(user);
+    }
+
+    @Test
+    @DisplayName("Test que contract for reset password endpoint.")
+    void resetPasswordContractTest() throws InterruptedException {
+        UserModel user = new UserUtils().authenticationNewUserWithEmail(email);
+        new UsersClient().postForgotPassword(user);
+        String token = new EmailFactory().returnTokenFromEmail(email);
+        String password = new Faker().internet().password();
+        new UsersClient().postResetPassword(token, password)
+                .statusCode(SC_OK)
+                .body(matchesJsonSchemaInClasspath("jsonschemas/BasicResponseWithMessageSchema.json"));
+        new UsersClient().deleteAccount(user);
+    }
+
+    @Test
+    @DisplayName("Test que contract from Change Password endpoint.")
+    void changePasswordContractTest() {
+        UserModel user = new UserUtils().authenticationNewUser();
+        String newPassword = new Faker().internet().password();
+        new UsersClient().postChangePassword(user, newPassword)
+                .statusCode(SC_OK)
+                .body(matchesJsonSchemaInClasspath("jsonschemas/BasicResponseWithMessageSchema.json"));
+        new UsersClient().deleteAccount(user);
     }
 
     @Test
@@ -68,7 +110,7 @@ public class UsersContractTests {
         UserModel user = new UserUtils().authenticationNewUser();
         new UsersClient().deleteAccount(user)
                 .statusCode(SC_OK)
-                .body(matchesJsonSchemaInClasspath("jsonschemas/DeleteSchema.json"));
+                .body(matchesJsonSchemaInClasspath("jsonschemas/BasicResponseWithMessageSchema.json"));
     }
 
     @Test
@@ -77,6 +119,6 @@ public class UsersContractTests {
         UserModel user = new UserUtils().authenticationNewUser();
         new UsersClient().deleteLogout(user)
                 .statusCode(SC_OK)
-                .body(matchesJsonSchemaInClasspath("jsonschemas/DeleteSchema.json"));
+                .body(matchesJsonSchemaInClasspath("jsonschemas/BasicResponseWithMessageSchema.json"));
     }
 }

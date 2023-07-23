@@ -16,8 +16,10 @@ public class UserUtils {
 
     public UserModel authenticationNewUserWithEmail(String email){
         UserModel user = new UserFactory().generateUserWithEmail(email);
+        String password = user.getPassword();
         new UsersClient().postRegisterNewUser(user);
         user = new UsersClient().postLoginReturnUser(user);
+        user.setPassword(password);
         return user;
     }
 }
