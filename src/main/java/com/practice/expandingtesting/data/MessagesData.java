@@ -15,6 +15,8 @@ public enum MessagesData {
     USERS_FORGOT_PASSWORD_SUCCESS("Password reset link successfully sent to {S}. Please verify by clicking on the given link"),
     USERS_FORGOT_PASSWORD_INVALID_EMAIL("A valid email address is required"),
     USERS_FORGOT_PASSWORD_NONEXISTENT_EMAIL("No account found with the given email address"),
+    USERS_VERIFY_TOKEN_SUCCESS("The provided password reset token is valid"),
+    USERS_VERIFY_TOKEN_INVALID("The provided password reset token is invalid or has expired"),
     USERS_RESET_PASSWORD_SUCCESS("The password was successfully updated"),
     USERS_CHANGE_PASSWORD_SUCCESS("The password was successfully updated"),
     USERS_CHANGE_PASSWORD_MINIMUM_TOKEN("Token must be between 64 characters"),

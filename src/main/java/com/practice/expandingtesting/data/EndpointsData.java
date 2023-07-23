@@ -6,6 +6,7 @@ public enum EndpointsData {
     USERS_LOGIN("/users/login"),
     USERS_PROFILE("/users/profile"),
     USERS_FORGOT_PASSWORD("/users/forgot-password"),
+    USERS_VERIFY_RESET_PASSWORD_TOKEN("/users/verify-reset-password-token"),
     USERS_RESET_PASSWORD("/users/reset-password"),
     USERS_CHANGE_PASSWORD("/users/change-password"),
     USERS_DELETE_LOGOUT("/users/logout"),

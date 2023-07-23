@@ -4,7 +4,6 @@ import com.practice.expandingtesting.client.users.UsersClient;
 import com.practice.expandingtesting.factory.EmailFactory;
 import com.practice.expandingtesting.model.UserModel;
 import com.practice.expandingtesting.utils.UserUtils;
-import net.datafaker.Faker;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,10 +13,10 @@ import static com.practice.expandingtesting.data.MessagesData.*;
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.CoreMatchers.is;
 
-public class ResetPasswordTests {
+public class VerifyResetTokenTests {
 
     String email = "test15@mailsac.com";
-    UserModel user = null;
+    UserModel user;
 
     @BeforeEach
     void setUp() {
@@ -30,45 +29,41 @@ public class ResetPasswordTests {
     }
 
     @Test
-    @DisplayName("Test que request for reset password with valid email.")
-    void resetPasswordSuccess() throws InterruptedException {
+    @DisplayName("Test que request Verify Reset Password Token with valid token.")
+    void verifyTokenSuccess() throws InterruptedException {
         new UsersClient().postForgotPassword(this.user);
         String token = new EmailFactory().returnTokenFromEmail(this.email);
-        String password = new Faker().internet().password();
-        new UsersClient().postResetPassword(token, password)
+        new UsersClient().postVerifyResetPasswordToken(token)
                 .statusCode(SC_OK)
                 .body("success", is(true))
                 .body("status", is(SC_OK))
-                .body("message", is(USERS_RESET_PASSWORD_SUCCESS.message));
+                .body("message", is(USERS_VERIFY_TOKEN_SUCCESS.message));
     }
 
     @Test
-    @DisplayName("Test que request for reset password with an invalid token with less characters")
-    void resetPasswordLessCharactersToken() throws InterruptedException {
+    @DisplayName("Test que request Verify Reset Password Token with invalid token.")
+    void verifyTokenInvalidToken() throws InterruptedException {
         new UsersClient().postForgotPassword(this.user);
-        //Getting the token from email to delete the message and clean the inbox
         new EmailFactory().returnTokenFromEmail(this.email);
         String token = "NewInvalidTOken";
-        String password = new Faker().internet().password();
-        new UsersClient().postResetPassword(token, password)
-                .statusCode(SC_BAD_REQUEST)
+        new UsersClient().postVerifyResetPasswordToken(token)
+                .statusCode(SC_UNAUTHORIZED)
                 .body("success", is(false))
-                .body("status", is(SC_BAD_REQUEST))
-                .body("message", is(USERS_CHANGE_PASSWORD_MINIMUM_TOKEN.message));
+                .body("status", is(SC_UNAUTHORIZED))
+                .body("message", is(USERS_VERIFY_TOKEN_INVALID.message));
     }
 
     @Test
-    @DisplayName("Test que request for reset password with an invalid token with 64 characters.")
-    void resetPasswordInvalidToken() throws InterruptedException {
+    @DisplayName("Test que request Verify Reset Password Token with invalid token with correct token size.")
+    void verifyTokenInvalidCorrectSizeToken() throws InterruptedException {
         new UsersClient().postForgotPassword(this.user);
         //Getting the token from email to delete the message and clean the inbox
         new EmailFactory().returnTokenFromEmail(this.email);
         String token = "cb89a9b48c6348d094652afd55b1fb8448f2bc14801c40da9d53ea6f055a3800";
-        String password = new Faker().internet().password();
-        new UsersClient().postResetPassword(token, password)
+        new UsersClient().postVerifyResetPasswordToken(token)
                 .statusCode(SC_UNAUTHORIZED)
                 .body("success", is(false))
                 .body("status", is(SC_UNAUTHORIZED))
-                .body("message", is(USERS_CHANGE_PASSWORD_INVALID_TOKEN.message));
+                .body("message", is(USERS_VERIFY_TOKEN_INVALID.message));
     }
 }

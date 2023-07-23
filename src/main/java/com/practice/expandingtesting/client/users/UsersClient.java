@@ -22,6 +22,7 @@ public class UsersClient {
     private final String urlReset = basePath + USERS_RESET_PASSWORD.endpoint;
     private final String urlDeleteAccount = basePath + USERS_DELETE_ACCOUNT.endpoint;
     private final String urlChangePassword = basePath + USERS_CHANGE_PASSWORD.endpoint;
+    private final String urlVerifyToken = basePath + USERS_VERIFY_RESET_PASSWORD_TOKEN.endpoint;
 
 
     private String generateBody(UserModel user) {
@@ -116,6 +117,17 @@ public class UsersClient {
                 .formParam("newPassword", newPassword)
                 .when()
                 .post(urlReset)
+                .then();
+    }
+
+    public ValidatableResponse postVerifyResetPasswordToken(String token){
+        return given()
+                .header("accept", "application/json")
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                .contentType("application/x-www-form-urlencoded; charset=utf-8")
+                .formParam("token", token)
+                .when()
+                .post(urlVerifyToken)
                 .then();
     }
 
