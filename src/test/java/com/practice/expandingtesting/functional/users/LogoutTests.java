@@ -3,6 +3,8 @@ package com.practice.expandingtesting.functional.users;
 import com.practice.expandingtesting.client.users.UsersClient;
 import com.practice.expandingtesting.model.UserModel;
 import com.practice.expandingtesting.utils.UserUtils;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,12 +15,22 @@ import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
 import static org.hamcrest.Matchers.is;
 
 public class LogoutTests {
+    UserModel user = null;
+
+    @BeforeEach
+    void setUp() {
+        this.user = new UserUtils().authenticationNewUser();
+    }
+
+    @AfterEach
+    void tearDown() {
+        new UsersClient().deleteAccount(this.user);
+    }
 
     @Test
     @DisplayName("Test the logout successfully when the token is valid.")
     void deleteLogoutUserSuccess() {
-        UserModel user = new UserUtils().authenticationNewUser();
-        new UsersClient().deleteLogout(user)
+        new UsersClient().deleteLogout(this.user)
                 .statusCode(SC_OK)
                 .body("success", is(true))
                 .body("status", is(SC_OK))
@@ -28,9 +40,8 @@ public class LogoutTests {
     @Test
     @DisplayName("Test the logout with invalid token.")
     void deleteLogoutUserInvalidToken() {
-        UserModel user = new UserUtils().authenticationNewUser();
-        user.setToken("123454");
-        new UsersClient().deleteLogout(user)
+        this.user.setToken("123454");
+        new UsersClient().deleteLogout(this.user)
                 .statusCode(SC_UNAUTHORIZED)
                 .body("success", is(false))
                 .body("status", is(SC_UNAUTHORIZED))

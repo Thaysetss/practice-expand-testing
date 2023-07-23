@@ -17,6 +17,8 @@ public enum MessagesData {
     USERS_FORGOT_PASSWORD_NONEXISTENT_EMAIL("No account found with the given email address"),
     USERS_RESET_PASSWORD_SUCCESS("The password was successfully updated"),
     USERS_CHANGE_PASSWORD_SUCCESS("The password was successfully updated"),
+    USERS_CHANGE_PASSWORD_MINIMUM_TOKEN("Token must be between 64 characters"),
+    USERS_CHANGE_PASSWORD_INVALID_TOKEN("The password reset token is invalid or has expired"),
     USERS_NEW_PASSWORD_CHARACTERS("New password must be between 6 and 30 characters");
     public final String message;
 

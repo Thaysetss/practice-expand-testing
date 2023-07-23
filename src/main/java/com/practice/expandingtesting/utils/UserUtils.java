@@ -16,9 +16,6 @@ public class UserUtils {
 
     public UserModel authenticationNewUserWithEmail(String email){
         UserModel user = new UserFactory().generateUserWithEmail(email);
-        System.out.println("Name: " + user.getName());
-        System.out.println("Email: " + user.getEmail());
-        System.out.println("Password: " + user.getPassword());
         new UsersClient().postRegisterNewUser(user);
         user = new UsersClient().postLoginReturnUser(user);
         return user;
