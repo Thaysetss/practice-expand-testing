@@ -38,15 +38,15 @@ public class PostNotesTests {
         NotesModel notes = new NotesFactory().generateRandomNotes();
         new NotesClient().postNotes(this.user, notes)
                 .statusCode(SC_OK)
-                .body("success", is(true))
-                .body("status", is(SC_OK))
-                .body("message", is(POST_CREATED_SUCCESS.message))
-                .body("data.id", Matchers.is(Matchers.not(empty())))
-                .body("data.title", is(notes.getTitle()))
-                .body("data.description", is(notes.getDescription()))
-                .body("data.category", is(notes.getCategory()))
-                .body("data.completed", is(false))
-                .body("data.user_id", is(this.user.getId()));
+                .body("success", is(true),
+                        "status", is(SC_OK),
+                        "message", is(POST_CREATED_SUCCESS.message),
+                        "data.id", Matchers.is(Matchers.not(empty())),
+                        "data.title", is(notes.getTitle()),
+                        "data.description", is(notes.getDescription()),
+                        "data.category", is(notes.getCategory()),
+                        "data.completed", is(false),
+                        "data.user_id", is(this.user.getId()));
     }
 
     @Test
@@ -55,9 +55,9 @@ public class PostNotesTests {
         NotesModel notes = new NotesFactory().generateNullTitleNotes();
         new NotesClient().postNotes(this.user, notes)
                 .statusCode(SC_BAD_REQUEST)
-                .body("success", is(false))
-                .body("status", is(SC_BAD_REQUEST))
-                .body("message", is(TITLE_INVALID_CHARACTERS.message));
+                .body("success", is(false),
+                        "status", is(SC_BAD_REQUEST),
+                        "message", is(TITLE_INVALID_CHARACTERS.message));
     }
 
     @Test
@@ -66,9 +66,9 @@ public class PostNotesTests {
         NotesModel notes = new NotesFactory().generateNullDescriptionNotes();
         new NotesClient().postNotes(this.user, notes)
                 .statusCode(SC_BAD_REQUEST)
-                .body("success", is(false))
-                .body("status", is(SC_BAD_REQUEST))
-                .body("message", is(DESCRIPTION_INVALID_CHARACTERS.message));
+                .body("success", is(false),
+                        "status", is(SC_BAD_REQUEST),
+                        "message", is(DESCRIPTION_INVALID_CHARACTERS.message));
     }
 
     @Test
@@ -77,9 +77,9 @@ public class PostNotesTests {
         NotesModel notes = new NotesFactory().generateNullCategoryNotes();
         new NotesClient().postNotes(this.user, notes)
                 .statusCode(SC_BAD_REQUEST)
-                .body("success", is(false))
-                .body("status", is(SC_BAD_REQUEST))
-                .body("message", is(CATEGORY_INVALID_VALUE.message));
+                .body("success", is(false),
+                        "status", is(SC_BAD_REQUEST),
+                        "message", is(CATEGORY_INVALID_VALUE.message));
     }
 
     @Test
@@ -89,8 +89,8 @@ public class PostNotesTests {
         this.user.setToken("TEST010203TOken");
         new NotesClient().postNotes(this.user, notes)
                 .statusCode(SC_UNAUTHORIZED)
-                .body("success", is(false))
-                .body("status", is(SC_UNAUTHORIZED))
-                .body("message", is(UNAUTHORIZED.message));
+                .body("success", is(false),
+                        "status", is(SC_UNAUTHORIZED),
+                        "message", is(UNAUTHORIZED.message));
     }
 }

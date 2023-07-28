@@ -18,13 +18,13 @@ public class LoginTests {
         new UsersClient().postRegisterNewUser(user);
         new UsersClient().postLogin(user)
                 .statusCode(SC_OK)
-                .body("success", is(true))
-                .body("status", is(SC_OK))
-                .body("message", is(LOGIN_SUCCESS.message))
-                .body("data.id", is(not(empty())))
-                .body("data.name", is(user.getName()))
-                .body("data.email", is(user.getEmail()))
-                .body("data.token", is(not(empty())));
+                .body("success", is(true),
+                        "status", is(SC_OK),
+                        "message", is(LOGIN_SUCCESS.message),
+                        "data.id", is(not(empty())),
+                        "data.name", is(user.getName()),
+                        "data.email", is(user.getEmail()),
+                        "data.token", is(not(empty())));
     }
 
     @Test
@@ -35,8 +35,8 @@ public class LoginTests {
         user.setPassword("wrong_password");
         new UsersClient().postLogin(user)
                 .statusCode(SC_UNAUTHORIZED)
-                .body("success", is(false))
-                .body("message", is(LOGIN_INCORRECT_EMAIL_PASSWORD.message));
+                .body("success", is(false),
+                        "message", is(LOGIN_INCORRECT_EMAIL_PASSWORD.message));
     }
 
     @Test
@@ -47,8 +47,8 @@ public class LoginTests {
         user.setEmail("nonexistent@newemail.com");
         new UsersClient().postLogin(user)
                 .statusCode(SC_UNAUTHORIZED)
-                .body("success", is(false))
-                .body("message", is(LOGIN_INCORRECT_EMAIL_PASSWORD.message));
+                .body("success", is(false),
+                        "message", is(LOGIN_INCORRECT_EMAIL_PASSWORD.message));
     }
 
     @Test
@@ -58,8 +58,8 @@ public class LoginTests {
         new UsersClient().postRegisterNewUser(user);
         new UsersClient().postLogin(user)
                 .statusCode(SC_BAD_REQUEST)
-                .body("success", is(false))
-                .body("message", is(REGISTER_INVALID_EMAIL.message));
+                .body("success", is(false),
+                        "message", is(REGISTER_INVALID_EMAIL.message));
     }
 
     @Test
@@ -70,7 +70,7 @@ public class LoginTests {
         user.setPassword("123pa");
         new UsersClient().postLogin(user)
                 .statusCode(SC_BAD_REQUEST)
-                .body("success", is(false))
-                .body("message", is(LOGIN_PASSWORD_LESS_CHARACTERS.message));
+                .body("success", is(false),
+                        "message", is(LOGIN_PASSWORD_LESS_CHARACTERS.message));
     }
 }

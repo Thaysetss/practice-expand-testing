@@ -33,30 +33,31 @@ public class ChangePasswordTests {
         String newPassword = new Faker().internet().password();
         new UsersClient().postChangePassword(this.user, newPassword)
                 .statusCode(SC_OK)
-                .body("success", is(true))
-                .body("status", is(SC_OK))
-                .body("message", is(CHANGE_PASSWORD_SUCCESS.message));
+                .body("success", is(true),
+                        "status", is(SC_OK),
+                        "message", is(CHANGE_PASSWORD_SUCCESS.message));
     }
 
     @Test
     @DisplayName("Test que Change Password endpoint using an invalid token.")
-    void changePasswordTokenInvalid(){
+    void changePasswordTokenInvalid() {
         String newPassword = new Faker().internet().password();
         this.user.setToken("TESTEInvalidToken");
         new UsersClient().postChangePassword(this.user, newPassword)
                 .statusCode(SC_UNAUTHORIZED)
-                .body("success", is(false))
-                .body("status", is(SC_UNAUTHORIZED))
-                .body("message", is(UNAUTHORIZED.message));
+                .body("success", is(false),
+                        "status", is(SC_UNAUTHORIZED),
+                        "message", is(UNAUTHORIZED.message));
     }
+
     @Test
     @DisplayName("Test que Change Password endpoint using an invalid password as new password.")
-    void changePasswordNewPasswordInvalid(){
+    void changePasswordNewPasswordInvalid() {
         String newPassword = "123";
         new UsersClient().postChangePassword(this.user, newPassword)
                 .statusCode(SC_BAD_REQUEST)
-                .body("success", is(false))
-                .body("status", is(SC_BAD_REQUEST))
-                .body("message", is(NEW_PASSWORD_CHARACTERS.message));
+                .body("success", is(false),
+                        "status", is(SC_BAD_REQUEST),
+                        "message", is(NEW_PASSWORD_CHARACTERS.message));
     }
 }

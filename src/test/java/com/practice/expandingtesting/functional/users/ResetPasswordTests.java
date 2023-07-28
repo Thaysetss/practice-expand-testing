@@ -10,13 +10,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.practice.expandingtesting.data.MessagesData.*;
+import static com.practice.expandingtesting.data.UsersMessages.*;
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.CoreMatchers.is;
 
 public class ResetPasswordTests {
 
-    String email = "test15@mailsac.com";
+    String email = "test19@mailsac.com";
     UserModel user = null;
 
     @BeforeEach
@@ -37,9 +37,9 @@ public class ResetPasswordTests {
         String password = new Faker().internet().password();
         new UsersClient().postResetPassword(token, password)
                 .statusCode(SC_OK)
-                .body("success", is(true))
-                .body("status", is(SC_OK))
-                .body("message", is(USERS_RESET_PASSWORD_SUCCESS.message));
+                .body("success", is(true),
+                        "status", is(SC_OK),
+                        "message", is(RESET_PASSWORD_SUCCESS.message));
     }
 
     @Test
@@ -52,9 +52,9 @@ public class ResetPasswordTests {
         String password = new Faker().internet().password();
         new UsersClient().postResetPassword(token, password)
                 .statusCode(SC_BAD_REQUEST)
-                .body("success", is(false))
-                .body("status", is(SC_BAD_REQUEST))
-                .body("message", is(USERS_CHANGE_PASSWORD_MINIMUM_TOKEN.message));
+                .body("success", is(false),
+                        "status", is(SC_BAD_REQUEST),
+                        "message", is(CHANGE_PASSWORD_MINIMUM_TOKEN.message));
     }
 
     @Test
@@ -67,8 +67,8 @@ public class ResetPasswordTests {
         String password = new Faker().internet().password();
         new UsersClient().postResetPassword(token, password)
                 .statusCode(SC_UNAUTHORIZED)
-                .body("success", is(false))
-                .body("status", is(SC_UNAUTHORIZED))
-                .body("message", is(USERS_CHANGE_PASSWORD_INVALID_TOKEN.message));
+                .body("success", is(false),
+                        "status", is(SC_UNAUTHORIZED),
+                        "message", is(CHANGE_PASSWORD_INVALID_TOKEN.message));
     }
 }

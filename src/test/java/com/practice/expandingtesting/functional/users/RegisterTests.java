@@ -17,12 +17,12 @@ public class RegisterTests {
         var user = new UserFactory().generateRandomUser();
         new UsersClient().postRegisterNewUser(user)
                 .statusCode(SC_CREATED)
-                .body("data.id", is(not(empty())))
-                .body("data.name", is(user.getName()))
-                .body("data.email", is(user.getEmail()))
-                .body("success", is(true))
-                .body("status", is(SC_CREATED))
-                .body("message", is(REGISTER_ACCOUNT_CREATED.message));
+                .body("data.id", is(not(empty())),
+                        "data.name", is(user.getName()),
+                        "data.email", is(user.getEmail()),
+                        "success", is(true),
+                        "status", is(SC_CREATED),
+                        "message", is(REGISTER_ACCOUNT_CREATED.message));
     }
 
     @Test
@@ -31,8 +31,8 @@ public class RegisterTests {
         var user = new UserFactory().generateUserInvalidEmail();
         new UsersClient().postRegisterNewUser(user)
                 .statusCode(SC_BAD_REQUEST)
-                .body("success", is(false))
-                .body("message", is(REGISTER_INVALID_EMAIL.message));
+                .body("success", is(false),
+                        "message", is(REGISTER_INVALID_EMAIL.message));
     }
 
     @Test
@@ -41,8 +41,8 @@ public class RegisterTests {
         var user = new UserFactory().generateUserNullName();
         new UsersClient().postRegisterNewUser(user)
                 .statusCode(SC_BAD_REQUEST)
-                .body("success", is(false))
-                .body("message", is(REGISTER_NULL_NAME.message));
+                .body("success", is(false),
+                        "message", is(REGISTER_NULL_NAME.message));
     }
 
     @Test
@@ -51,8 +51,8 @@ public class RegisterTests {
         var user = new UserFactory().generateUserNullEmail();
         new UsersClient().postRegisterNewUser(user)
                 .statusCode(SC_BAD_REQUEST)
-                .body("success", is(false))
-                .body("message", is(REGISTER_INVALID_EMAIL.message));
+                .body("success", is(false),
+                        "message", is(REGISTER_INVALID_EMAIL.message));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class RegisterTests {
         var user = new UserFactory().generateUserNullPassword();
         new UsersClient().postRegisterNewUser(user)
                 .statusCode(SC_BAD_REQUEST)
-                .body("success", is(false))
-                .body("message", is(REGISTER_NULL_PASSWORD.message));
+                .body("success", is(false),
+                        "message", is(REGISTER_NULL_PASSWORD.message));
     }
 }

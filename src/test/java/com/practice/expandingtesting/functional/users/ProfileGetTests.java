@@ -33,12 +33,12 @@ public class ProfileGetTests {
     void getProfileValidLogin() {
         new UsersClient().getProfile(this.user)
                 .statusCode(SC_OK)
-                .body("status", is(SC_OK))
-                .body("success", is(true))
-                .body("message", is(PROFILE_SUCCESS.message))
-                .body("data.email", is(this.user.getEmail()))
-                .body("data.name", is(this.user.getName()))
-                .body("data.id", is(this.user.getId()));
+                .body("status", is(SC_OK),
+                        "success", is(true),
+                        "message", is(PROFILE_SUCCESS.message),
+                        "data.email", is(this.user.getEmail()),
+                        "data.name", is(this.user.getName()),
+                        "data.id", is(this.user.getId()));
     }
 
     @Test
@@ -47,8 +47,8 @@ public class ProfileGetTests {
         this.user.setToken("123Token");
         new UsersClient().getProfile(this.user)
                 .statusCode(SC_UNAUTHORIZED)
-                .body("status", is(SC_UNAUTHORIZED))
-                .body("success", is(false))
-                .body("message", is(UNAUTHORIZED.message));
+                .body("status", is(SC_UNAUTHORIZED),
+                        "success", is(false),
+                        "message", is(UNAUTHORIZED.message));
     }
 }

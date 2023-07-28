@@ -32,9 +32,9 @@ public class LogoutTests {
     void deleteLogoutUserSuccess() {
         new UsersClient().deleteLogout(this.user)
                 .statusCode(SC_OK)
-                .body("success", is(true))
-                .body("status", is(SC_OK))
-                .body("message", is(LOGOUT_SUCCESS.message));
+                .body("success", is(true),
+                        "status", is(SC_OK),
+                        "message", is(LOGOUT_SUCCESS.message));
     }
 
     @Test
@@ -43,8 +43,8 @@ public class LogoutTests {
         this.user.setToken("123454");
         new UsersClient().deleteLogout(this.user)
                 .statusCode(SC_UNAUTHORIZED)
-                .body("success", is(false))
-                .body("status", is(SC_UNAUTHORIZED))
-                .body("message", is(UNAUTHORIZED.message));
+                .body("success", is(false),
+                        "status", is(SC_UNAUTHORIZED),
+                        "message", is(UNAUTHORIZED.message));
     }
 }

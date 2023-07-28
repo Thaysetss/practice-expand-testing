@@ -15,7 +15,7 @@ import static org.hamcrest.CoreMatchers.is;
 
 public class VerifyResetTokenTests {
 
-    String email = "test15@mailsac.com";
+    String email = "test18@mailsac.com";
     UserModel user;
 
     @BeforeEach
@@ -35,9 +35,9 @@ public class VerifyResetTokenTests {
         String token = new EmailFactory().returnTokenFromEmail(this.email);
         new UsersClient().postVerifyResetPasswordToken(token)
                 .statusCode(SC_OK)
-                .body("success", is(true))
-                .body("status", is(SC_OK))
-                .body("message", is(VERIFY_TOKEN_SUCCESS.message));
+                .body("success", is(true),
+                        "status", is(SC_OK),
+                        "message", is(VERIFY_TOKEN_SUCCESS.message));
     }
 
     @Test
@@ -48,9 +48,9 @@ public class VerifyResetTokenTests {
         String token = "NewInvalidTOken";
         new UsersClient().postVerifyResetPasswordToken(token)
                 .statusCode(SC_UNAUTHORIZED)
-                .body("success", is(false))
-                .body("status", is(SC_UNAUTHORIZED))
-                .body("message", is(VERIFY_TOKEN_INVALID.message));
+                .body("success", is(false),
+                        "status", is(SC_UNAUTHORIZED),
+                        "message", is(VERIFY_TOKEN_INVALID.message));
     }
 
     @Test

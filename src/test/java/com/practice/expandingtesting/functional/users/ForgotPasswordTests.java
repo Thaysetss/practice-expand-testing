@@ -30,10 +30,10 @@ public class ForgotPasswordTests {
     void forgotPasswordSuccess() {
         new UsersClient().postForgotPassword(this.user)
                 .statusCode(SC_OK)
-                .body("success", is(true))
-                .body("status", is(SC_OK))
-                .body("message", is("Password reset link successfully sent to "
-                        + this.user.getEmail() + ". Please verify by clicking on the given link"));
+                .body("success", is(true),
+                        "status", is(SC_OK),
+                        "message", is("Password reset link successfully sent to "
+                                + this.user.getEmail() + ". Please verify by clicking on the given link"));
     }
 
     @Test
@@ -42,9 +42,9 @@ public class ForgotPasswordTests {
         this.user.setEmail("testemail");
         new UsersClient().postForgotPassword(this.user)
                 .statusCode(SC_BAD_REQUEST)
-                .body("success", is(false))
-                .body("status", is(SC_BAD_REQUEST))
-                .body("message", is(FORGOT_PASSWORD_INVALID_EMAIL.message));
+                .body("success", is(false),
+                        "status", is(SC_BAD_REQUEST),
+                        "message", is(FORGOT_PASSWORD_INVALID_EMAIL.message));
     }
 
     @Test
@@ -53,8 +53,8 @@ public class ForgotPasswordTests {
         this.user.setEmail("this_test_non_existent_email@nonexistent.com");
         new UsersClient().postForgotPassword(this.user)
                 .statusCode(SC_UNAUTHORIZED)
-                .body("success", is(false))
-                .body("status", is(SC_UNAUTHORIZED))
-                .body("message", is(FORGOT_PASSWORD_NONEXISTENT_EMAIL.message));
+                .body("success", is(false),
+                        "status", is(SC_UNAUTHORIZED),
+                        "message", is(FORGOT_PASSWORD_NONEXISTENT_EMAIL.message));
     }
 }

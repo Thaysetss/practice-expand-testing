@@ -19,9 +19,9 @@ public class DeleteAccountTests {
         UserModel user = new UserUtils().authenticationNewUser();
         new UsersClient().deleteAccount(user)
                 .statusCode(SC_OK)
-                .body("success", is(true))
-                .body("status", is(SC_OK))
-                .body("message", is(DELETE_ACCOUNT_SUCCESS.message));
+                .body("success", is(true),
+                        "status", is(SC_OK),
+                        "message", is(DELETE_ACCOUNT_SUCCESS.message));
     }
 
     @Test
@@ -31,9 +31,9 @@ public class DeleteAccountTests {
         user.setToken("123454");
         new UsersClient().deleteAccount(user)
                 .statusCode(SC_UNAUTHORIZED)
-                .body("success", is(false))
-                .body("status", is(SC_UNAUTHORIZED))
-                .body("message", is(UNAUTHORIZED.message));
+                .body("success", is(false),
+                        "status", is(SC_UNAUTHORIZED),
+                        "message", is(UNAUTHORIZED.message));
     }
 
     @Test
@@ -43,8 +43,8 @@ public class DeleteAccountTests {
         new UsersClient().deleteAccount(user);
         new UsersClient().getProfile(user)
                 .statusCode(SC_UNAUTHORIZED)
-                .body("success", is(false))
-                .body("status", is(SC_UNAUTHORIZED))
-                .body("message", is(UNAUTHORIZED.message));
+                .body("success", is(false),
+                        "status", is(SC_UNAUTHORIZED),
+                        "message", is(UNAUTHORIZED.message));
     }
 }

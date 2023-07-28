@@ -43,9 +43,9 @@ public class ProfilePatchTests {
         this.user.setPassword("PatchTest123");
         new UsersClient().patchProfile(this.user)
                 .statusCode(SC_BAD_REQUEST)
-                .body("success", is(false))
-                .body("status", is(SC_BAD_REQUEST))
-                .body("message", is(REGISTER_NULL_NAME.message));
+                .body("success", is(false),
+                        "status", is(SC_BAD_REQUEST),
+                        "message", is(REGISTER_NULL_NAME.message));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class ProfilePatchTests {
         this.user.setToken("15156");
         new UsersClient().patchProfile(this.user)
                 .statusCode(SC_UNAUTHORIZED)
-                .body("success", is(false))
-                .body("status", is(SC_UNAUTHORIZED));
+                .body("success", is(false),
+                        "status", is(SC_UNAUTHORIZED));
     }
 }
