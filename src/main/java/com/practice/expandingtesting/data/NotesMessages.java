@@ -4,7 +4,8 @@ public enum NotesMessages {
     POST_CREATED_SUCCESS("Note successfully created"),
     TITLE_INVALID_CHARACTERS("Title must be between 4 and 100 characters"),
     DESCRIPTION_INVALID_CHARACTERS("Description must be between 4 and 1000 characters"),
-    CATEGORY_INVALID_VALUE("Category must be one of the categories: Home, Work, Personal");
+    CATEGORY_INVALID_VALUE("Category must be one of the categories: Home, Work, Personal"),
+    GET_NOTES_SUCCESS("Notes successfully retrieved");
     public final String message;
 
     NotesMessages(String message) {
